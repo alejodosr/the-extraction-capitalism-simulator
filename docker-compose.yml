@@ -1,0 +1,21 @@
+services:
+  web:
+    build: .
+    image: econsim:latest
+    container_name: econsim
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      # Set DOMAIN (e.g. in a .env file next to this compose file) to enable
+      # automatic HTTPS via Let's Encrypt. Leave unset for HTTP-only / IP access.
+      DOMAIN: ${DOMAIN:-}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

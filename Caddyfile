@@ -1,0 +1,25 @@
+# If DOMAIN is set (e.g. econsim.example.com), Caddy provisions a Let's Encrypt
+# cert for it automatically. If DOMAIN is unset, we listen on :80 for any host,
+# which is what you want for IP-only access during a smoke test.
+{$DOMAIN::80} {
+	root * /srv
+	encode zstd gzip
+	file_server
+
+	# SPA fallback: unknown paths render index.html so client-side routing works.
+	try_files {path} /index.html
+
+	# Vite emits hashed filenames under /assets — safe to cache forever.
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	# index.html is the entry point; never let a stale copy pin users to old assets.
+	@html path / /index.html
+	header @html Cache-Control "no-cache, must-revalidate"
+
+	header {
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "DENY"
+	}
+}

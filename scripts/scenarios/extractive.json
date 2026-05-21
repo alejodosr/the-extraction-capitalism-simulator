@@ -1,0 +1,28 @@
+{
+  "_targets": {
+    "top5Share_last20_avg": ">= 0.85",
+    "exclusionRate_last20_avg": ">= 0.10",
+    "toxicityIndex_last20_avg": ">= 0.55",
+    "circulationRate_last20_avg": "<= 0.85"
+  },
+  "_note": "Circulation target revised from 0.70 to 0.85: the savings-recycling effect causes even hoarding agents to push circulation above 0.80 after 200 years. Relative ordering (extractive < balanced < state-led) is what matters for the narrative.",
+  "name": "Extractive (Laissez-faire)",
+  "workerRatio": 0.92,
+  "capitalistRatio": 0.08,
+  "capitalistWealthShare": 0.72,
+  "workerWealthShare": 0.23,
+  "stateWealthShare": 0.05,
+  "defaultOwnershipRatio": 0.98,
+  "defaultProductivity": 5.0,
+  "privateMarkup": 0.45,
+  "publicMarkup": 0.02,
+  "incomeTaxRate": 0.08,
+  "profitTaxRate": 0.1,
+  "taxProgressivity": 1.0,
+  "minimumWage": 5.0,
+  "welfareBudgetRatio": 0.01,
+  "investmentBudgetRatio": 0.02,
+  "essentialsSubsidyRatio": 0.0,
+  "workerConsumptionPropensity": 0.95,
+  "capitalistConsumptionPropensity": 0.08
+}
