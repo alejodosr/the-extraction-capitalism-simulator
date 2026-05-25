@@ -1,4 +1,9 @@
 import type { WorldState, Agent } from './types';
+import { SECTORS } from './types';
+import { BASKETS } from './baskets';
+
+// Essentials sectors that the subsidy applies to (mirrors consumption.ts).
+const ESSENTIAL_SECTORS = new Set(['food', 'energy', 'housing']);
 
 /**
  * Phase 5 — State expenditure.
@@ -13,6 +18,11 @@ import type { WorldState, Agent } from './types';
  * unemployed workers. Investment pool: Phase 8 spends it on hiring workers
  * into public/hybrid firms. Subsidy pool: Phase 6 draws from it to cover
  * the state's share of essentials prices for non-capitalist agents.
+ *
+ * Welfare is capped per agent at the deficit to afford the lower basket —
+ * this prevents the "welfare overshoot" oscillation where a huge equal-share
+ * payment rockets excluded agents to upper tier one year, then collapses back
+ * the next. Unused welfare returns to treasury (money conservation).
  */
 export function runStateExpenditure(world: WorldState): WorldState {
   // Welfare pool
@@ -23,11 +33,37 @@ export function runStateExpenditure(world: WorldState): WorldState {
   // Distribute welfare: prefer social_exclusion; fall back to unemployed workers.
   const recipients = chooseWelfareRecipients(world);
   if (recipients.length > 0 && welfarePool > 0) {
-    const per = welfarePool / recipients.length;
+    // Compute effective lower basket cost at current prices after subsidy.
+    // Pricing has already run (Phase 2), so clearingPrice is populated.
+    const subsidyRatio = Math.min(1, Math.max(0, world.state.essentialsSubsidyRatio));
+    const effectiveLowerCost = SECTORS.reduce((sum, s) => {
+      const market = world.markets.find((m) => m.sector === s);
+      const price = market?.clearingPrice ?? world.state.minimumWage;
+      const discount = ESSENTIAL_SECTORS.has(s) ? subsidyRatio : 0;
+      return sum + BASKETS.lower[s] * price * (1 - discount);
+    }, 0);
+
+    // Target available resources so consumptionBudget >= effectiveLowerCost.
+    // consumptionBudget = (wealth + income) * propensity, so:
+    //   target = effectiveLowerCost / propensity
+    const propensity = Math.max(0.01, world.state.workerPropensity);
+    const targetAvailable = effectiveLowerCost / propensity;
+
+    // Each recipient gets at most their individual deficit (how far below the
+    // lower-basket threshold they are), capped by an equal per-capita share of
+    // the pool so no one agent drains it. Unused pool returns to treasury.
+    const perCap = welfarePool / recipients.length;
+    let poolLeft = welfarePool;
     for (const a of recipients) {
-      a.income += per;
+      const available = a.wealth + a.income;
+      const deficit = Math.max(0, targetAvailable - available);
+      const give = Math.min(deficit, perCap, poolLeft);
+      a.income += give;
+      poolLeft -= give;
+      world.flows.totalWelfare += give;
     }
-    world.flows.totalWelfare += welfarePool;
+    // Return unspent welfare to treasury (money conservation).
+    world.state.treasury += poolLeft;
   } else {
     // No recipients — return pool to treasury to keep money conservation.
     world.state.treasury += welfarePool;
