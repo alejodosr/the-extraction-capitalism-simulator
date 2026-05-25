@@ -38,7 +38,7 @@ The engine treats these as correctness properties, not aspirations. If any of th
 - **Wealth is non-negative.** Consumption caps spending; the simulator does not push anyone into the red on its own.
 - **Employment is bidirectionally consistent.** Every `agent.employedAt` resolves to a firm whose `employeeIds` lists the agent.
 
-The implementation brief in `ECONSIM_IMPLEMENTATION_BRIEF.md` is the authoritative reference for types, phase semantics, and visual design.
+The implementation brief in `THE_EXTRACTION_IMPLEMENTATION_BRIEF.md` is the authoritative reference for types, phase semantics, and visual design.
 
 ## Stack
 
@@ -80,9 +80,9 @@ Open ports 80 and 443 in the Hetzner Cloud firewall (or `ufw allow 80,443/tcp`).
 ### Deploy
 
 ```bash
-git clone <this-repo> /opt/econsim && cd /opt/econsim
+git clone https://github.com/alejodosr/the-extraction-capitalism-simulator /opt/the-extraction && cd /opt/the-extraction
 # For automatic HTTPS, point an A record at the server, then:
-echo "DOMAIN=econsim.example.com" > .env
+echo "DOMAIN=the-extraction.example.com" > .env
 docker compose up -d --build
 ```
 
@@ -91,7 +91,7 @@ Without a `DOMAIN`, Caddy listens on `:80` and the app is reachable at `http://<
 ### Updating
 
 ```bash
-cd /opt/econsim && git pull && docker compose up -d --build
+cd /opt/the-extraction && git pull && docker compose up -d --build
 ```
 
 The `caddy_data` volume persists certificates across rebuilds, so renewals survive deploys.
