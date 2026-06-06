@@ -48,18 +48,18 @@ export type PresetName =
 
 export const PRESET_DESCRIPTIONS: Record<PresetName, string> = {
   'Extractivist':
-    'Validated extractivist scenario. Capitalists accumulate power unchecked — top-5% reaches ~88% of wealth by year 50, Gini 0.95, and ~37% of the population falls into social exclusion. Workers choke as wages stagnate and the safety net collapses.',
+    'Capitalists accumulate power unchecked — top-5% reaches ~87% of wealth by year 50, Gini 0.96, and ~34% of the population falls into social exclusion. Workers choke as wages stagnate and the safety net collapses.',
   'Mixed (social exclusion)':
-    'Mixed economy with cyclical poverty. Moderate taxes and partial redistribution exist, but wages sit near the lower-class basket threshold — workers near the margin cycle in and out of social exclusion depending on the year\'s welfare budget. Expect oscillating exclusion (0–40%) rather than a stable rate; this reflects a weakly-regulated economy where the safety net is too thin to fully absorb downturns.',
+    'Mixed economy with structural exclusion. Moderate taxes and partial redistribution exist, but low productivity and thin welfare mean social exclusion grows steadily year after year — from 0% at start to ~44% by year 50. The safety net is too weak to halt the drift; this is a system that looks moderate but produces deeply unequal outcomes over time.',
   'Socialism':
-    'Validated socialism scenario. A small capitalist class (4%) with regulated 35% private ownership coexists with a dominant public sector. High progressive taxes, strong welfare, and essentials subsidies keep 83% of the population in the upper class and 17% in the middle, with zero lower class and zero social exclusion. Gini stabilises around 0.83 — inequality exists but is managed.',
+    'A small capitalist class (4%) with regulated 35% private ownership coexists with a dominant public sector. High progressive taxes, strong welfare, and essentials subsidies keep ~83% of the population in the upper class, ~9% in the middle, and ~8% in the lower class, with near-zero social exclusion. Gini stabilises around 0.85 — inequality exists but is managed.',
   'State-led growth':
-    'Validated state-led scenario. Zero capitalist ownership, high taxes, and generous subsidies keep the entire worker class stable. By year 50 nearly all agents reach upper-class consumption, Gini stays below 0.77, and social exclusion is eliminated.',
+    'Zero capitalist ownership, high taxes, and generous subsidies keep the entire worker class stable. By year 50, ~93% of agents reach upper-class consumption, Gini falls to ~0.50, and social exclusion is eliminated.',
 };
 
 export const PRESETS: Record<PresetName, Partial<SimulationConfig>> = {
   'Extractivist': {
-    // Validated: top-5% → 87.9%, exclusion 36.9%, Gini 0.954, toxicity 60.9%
+    // Validated: top-5% 87.1%, exclusion 33.7%, Gini 0.956, toxicity 59.7%
     workerRatio: 0.92,
     capitalistRatio: 0.08,
     capitalistWealthShare: 0.75,
@@ -81,7 +81,7 @@ export const PRESETS: Record<PresetName, Partial<SimulationConfig>> = {
   },
 
   'State-led growth': {
-    // Validated: 0% exclusion, 98.6% upper/mid, Gini 0.767, toxicity 29.0%
+    // Validated: upper=92.9%, lower=7.0%, excl=0%, Gini=0.504, Top5%=25.6%, Toxicity=20.5%
     workerRatio: 1.0,
     capitalistRatio: 0.0,
     capitalistWealthShare: 0.0,
@@ -103,7 +103,7 @@ export const PRESETS: Record<PresetName, Partial<SimulationConfig>> = {
   },
 
   'Socialism': {
-    // Validated: upper=83.3%, mid=16.7%, lower=0%, excl=0%, Gini=0.829, Top5%=46.5%, Toxicity=32.9%
+    // Validated: upper=83.2%, mid=9.0%, lower=7.6%, excl=0.2%, Gini=0.853, Top5%=69.5%, Toxicity=42.9%
     workerRatio: 0.96,
     capitalistRatio: 0.04,
     capitalistWealthShare: 0.30,
@@ -125,7 +125,7 @@ export const PRESETS: Record<PresetName, Partial<SimulationConfig>> = {
   },
 
   'Mixed (social exclusion)': {
-    // Validated: 7.7% exclusion, upper 15.8%, lower 76.2%, Gini 0.950, toxicity 59.8%
+    // Validated: exclusion grows 0→44% by yr50, upper 12%, lower 44%, Gini 0.961, toxicity 64.3%
     workerRatio: 0.93,
     capitalistRatio: 0.07,
     capitalistWealthShare: 0.52,
