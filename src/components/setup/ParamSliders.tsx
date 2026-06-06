@@ -271,7 +271,7 @@ function SliderRow({
           {def.tooltip && (
             <>
               <span className="cursor-help select-none text-[10px] leading-none text-econ-muted/50">ⓘ</span>
-              <div className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden w-60 rounded-lg border border-econ-border bg-econ-card p-2.5 text-xs leading-snug text-econ-muted shadow-lg group-hover:block">
+              <div className="pointer-events-none absolute bottom-full left-0 z-20 mb-1.5 hidden max-w-[min(240px,calc(100vw-2rem))] rounded-lg border border-econ-border bg-econ-card p-2.5 text-xs leading-snug text-econ-muted shadow-lg group-hover:block">
                 {def.tooltip}
               </div>
             </>

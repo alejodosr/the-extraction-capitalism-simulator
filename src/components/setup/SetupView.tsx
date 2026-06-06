@@ -59,7 +59,7 @@ export function SetupView() {
   return (
     <div className="flex flex-col gap-6">
       <div className="rounded-xl border border-econ-border bg-econ-card p-6 shadow-card">
-        <div className="mb-4 flex items-center justify-between gap-4">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <div>
             <h2 className="text-xl font-semibold tracking-tight">Configure your simulation</h2>
             <p className="text-sm text-econ-muted">
@@ -74,7 +74,7 @@ export function SetupView() {
                 type="text"
                 value={config.name}
                 onChange={(e) => updateConfig({ name: e.target.value })}
-                className="rounded-md border border-econ-border bg-econ-bg px-3 py-1 text-sm text-econ-ink focus:outline-none focus:ring-2 focus:ring-econ-ink"
+                className="w-full rounded-md border border-econ-border bg-econ-bg px-3 py-1 text-sm text-econ-ink focus:outline-none focus:ring-2 focus:ring-econ-ink sm:w-auto"
               />
             </label>
           </div>
@@ -84,7 +84,7 @@ export function SetupView() {
 
       <ParamSliders />
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <button
           disabled={isRunning}
           onClick={handleRun}
@@ -97,7 +97,7 @@ export function SetupView() {
           {isRunning ? `Running… year ${progressYear}/${progressTotal}` : 'Run simulation'}
         </button>
         {isRunning && progressTotal > 0 && (
-          <div className="h-2 w-64 overflow-hidden rounded-full bg-econ-border">
+          <div className="h-2 w-full max-w-xs overflow-hidden rounded-full bg-econ-border">
             <div
               className="h-full bg-econ-ink transition-[width] duration-150"
               style={{ width: `${(progressYear / progressTotal) * 100}%` }}

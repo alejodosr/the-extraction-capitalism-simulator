@@ -32,7 +32,7 @@ export function DashboardView() {
   const selectedMetric = currentRun.metrics[yearIndex];
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-lg font-semibold">{currentRun.config.name}</h2>
           <p className="font-mono text-xs text-econ-muted">
@@ -40,7 +40,7 @@ export function DashboardView() {
             {new Date(currentRun.createdAt).toLocaleString()}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <select
             value={currentRun.id}
             onChange={(e) => selectRun(e.target.value)}

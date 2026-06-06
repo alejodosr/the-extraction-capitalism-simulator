@@ -63,6 +63,26 @@ export function AppShell() {
         {tab === 'compare' && <CompareView />}
         {tab === 'model' && <ModelView />}
       </main>
+      <footer className="border-t border-econ-border bg-econ-card/60 py-4 text-center text-xs text-econ-muted">
+        Made with ❤️ by{' '}
+        <a
+          href="https://substack.com/@postcapitalistrobots"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-econ-accent hover:underline"
+        >
+          postcapitalistrobots
+        </a>
+        {' · '}
+        <a
+          href="https://github.com/alejodosr/the-extraction-capitalism-simulator"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-econ-accent hover:underline"
+        >
+          source code
+        </a>
+      </footer>
     </div>
   );
 }
